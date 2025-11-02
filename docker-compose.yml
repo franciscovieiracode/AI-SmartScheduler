@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: ai_frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app          # source code
+      - /app/node_modules        # keep container's node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: ["npm", "run", "dev"]  # ensures Vite starts correctly on 0.0.0.0
+
+  backend:
+    build: ./backend/java-microservices/auth
+    container_name: auth
+    ports:
+      - "8080:8080"
